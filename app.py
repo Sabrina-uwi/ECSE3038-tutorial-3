@@ -42,3 +42,13 @@ def get_stats():
     return {
         "average_temperature": average_temp(readings),
     }
+
+@app.post("/device", status_code=201)
+async def add_reading(reading: dict):
+
+    for existing_reading in readings:
+       if existing_reading["name"] == reading["name"]:
+         raise HTTPException(status_code=400, detail="Reading with this name already exists")
+    
+    readings.append(reading)
+    return {"message": "Reading added successfully", "reading": reading}
