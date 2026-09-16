@@ -29,3 +29,10 @@ def get_hottest_device():
 @app.get("/devices/online")
 def get_online_devices():
     return [device for device in readings if device['online']]
+
+@app.get("/devices/{name}")
+def get_device(name: str):
+    for device in readings:
+        if device["name"] == name:
+            return device
+    raise HTTPException(status_code=404, detail="Device not found")
