@@ -52,3 +52,10 @@ async def add_reading(reading: dict):
     
     readings.append(reading)
     return {"message": "Reading added successfully", "reading": reading}
+
+@app.get("/rooms/{room}/devices")
+def get_devices_by_room(room: str):
+    devices_in_room = [device for device in readings if device["room"] == room]
+    if not devices_in_room:
+        raise HTTPException(status_code=404, detail="No devices found in this room")
+    return devices_in_room
