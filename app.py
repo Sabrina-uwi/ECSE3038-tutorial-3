@@ -17,3 +17,8 @@ print(average_temp(readings))
 
 def hottest_device(devices):
     return max(devices, key=lambda device: device['temp'])
+
+@app.get("/devices")
+def get_devices():
+    return readings
+
